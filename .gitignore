@@ -1,0 +1,7 @@
+/vendor/
+.git
+.idea
+planification
+views_rendered
+.DS_Store
+demo.mp4
