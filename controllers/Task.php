@@ -54,13 +54,13 @@ class Task extends Controller
     {
         $this->checkLogin();
 
-        if (  !$this->modelTask->checkId( $_POST['id'] ) ) {
+        if (  !$this->modelTask->checkId( $_GET['id'] ) ) {
             header( 'Location: '.HARDCODED_URL.'errors/error_main.php' );
             exit;
         }
         $tasks = $this->modelTask->getTasks( $_SESSION['user']->id );
         $view = 'views/tasksIndex.php';
-        $tasks = $this->modelTask->getUpdateForm( $_POST['id'], $tasks );
+        $tasks = $this->modelTask->getUpdateForm( $_GET['id'], $tasks );
 
         return compact( 'view', 'tasks' );
     }
@@ -68,14 +68,13 @@ class Task extends Controller
     public function postUpdate() {
         $this->checkLogin();
 
-        $description = $this->modelTask->checkDesc( $_POST['description'] );
         if ( !$this->modelTask->checkId( $_POST['id'] ) ) {
             header( 'Location: '.HARDCODED_URL.'errors/error_main.php' );
             exit;
         }
 
         $checked = isset( $_POST['is_done'] ) ? 1 : 0;
-        $this->modelTask->updateTask( $_POST['id'], $description, $checked );
+        $this->modelTask->updateTask( $_POST['id'], $this->modelTask->checkDesc( $_POST['description'] ), $checked );
 
         header( 'Location: ' . HARDCODED_URL );
         exit;

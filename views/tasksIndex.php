@@ -50,7 +50,6 @@
                         <div>
                             <form action="index.php"
                                   method="get">
-                                <button type="submit">modifier</button>
                                 <input type="hidden"
                                        name="a"
                                        value="getUpdate">
@@ -60,12 +59,13 @@
                                 <input type="hidden"
                                        name="id"
                                        value="<?= $task->taskID; ?>">
+                                <button type="submit">Modifier</button>
                             </form>
                         </div>
                         <div>
                             <form action="index.php"
                                   method="post">
-                                <button type="submit">supprimer</button>
+                                <button type="submit">Supprimer</button>
                                 <input type="hidden"
                                        name="a"
                                        value="delete">
