@@ -7,10 +7,7 @@ class Auth
     public function __construct() {
         $this->ModelAuth = new \Models\Auth();
     }
-    /**
-     * Définit la vue à proposer à l’utilisateur pour se connecter
-     * @return array
-     */
+
     public function getLogin(): array
     {
         return ['view' => 'views/getLogin.php'];
@@ -19,15 +16,15 @@ class Auth
     public function getLogout()
     {
         $_SESSION = array();
-        if (ini_get('session.use_cookies')) {
+        if ( ini_get('session.use_cookies') ) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', 1,
+            setcookie( session_name(), '', 1,
                 $params['path'], $params['domain'],
                 $params['secure'], $params['httponly']
             );
         }
         session_destroy();
-        header('Location: ' . HARDCODED_URL);
+        header( 'Location: ' . HARDCODED_URL );
         exit;
     }
 
@@ -35,14 +32,14 @@ class Auth
     {
         $_SESSION['user'] = null;
         $email = $_POST['email'];
-        echo $password = sha1($_POST['password']);
-        $user = $this->ModelAuth->checkUser($email, $password);
-        if (!$user) {
-            header('Location: ' . HARDCODED_URL);
+        echo $password = sha1( $_POST['password'] );
+        $user = $this->ModelAuth->checkUser( $email, $password );
+        if ( !$user ) {
+            header( 'Location: ' . HARDCODED_URL );
             exit;
         }
         $_SESSION['user'] = $user;
-        header('Location: ' . HARDCODED_URL . 'index.php?a=index&r=task');
+        header( 'Location: ' . HARDCODED_URL . 'index.php?a=index&r=task' );
         exit;
     }
 }

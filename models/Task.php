@@ -3,10 +3,10 @@ namespace Models;
 
 class Task extends Model
 {
-    public function getTasks(string $userId)
+    public function getTasks( string $userId )
     {
         $pdo = $this->connectDB();
-        if ($pdo) {
+        if ( $pdo ) {
             try {
                 $pdoSt =
                     $pdo->prepare('
@@ -23,16 +23,16 @@ class Task extends Model
                     $task->editable = 0;
                 }
                 return $tasks;
-            } catch (\PDOException $exception) {
+            } catch ( \PDOException $exception ) {
                 return null;
             }
         }
         return null;
     }
-    public function addTask(string $description, int $userId)
+    public function addTask( string $description, int $userId )
     {
         $pdo = $this->connectDB();
-        if ($pdo) {
+        if ( $pdo ) {
             try {
                 $pdoSt =
                     $pdo->prepare(
@@ -50,7 +50,7 @@ class Task extends Model
                 $pdo->exec($sql);
 
                 return true;
-            } catch (\PDOException $exception) {
+            } catch ( \PDOException $exception ) {
                 return false;
             }
         }
@@ -58,37 +58,32 @@ class Task extends Model
     }
     public function checkDesc( $description ) {
         $description = trim( $description );
-        if ( isset( $description ) ) {
-            if ( is_string( $description ) AND strlen( $description ) > 1 ) {
-                return $description;
-            }
+        if ( strlen( $description ) > 1 ) {
+            return $description;
         }
+
         return false;
     }
     public function checkId( $id ) {
-        $id = intval( $id, 10 );
-        if( is_int( $id ) AND $id > 0 ) {
-            return $id;
-        }
-        return false;
+        return ctype_digit( $id );
     }
     public function deleteTask( int $taskId ) {
         $pdo = $this->connectDB();
-        if ($pdo) {
+        if ( $pdo ) {
             try {
                 $sql = sprintf(
                     'DELETE FROM tasks WHERE id = \'%s\'',
                     $taskId
                 );
-                $pdo->exec($sql);
+                $pdo->exec( $sql );
                 $sql = sprintf(
                     'DELETE FROM task_user WHERE task_id = \'%s\'',
                     $taskId
                 );
-                $pdo->exec($sql);
+                $pdo->exec( $sql );
 
                 return true;
-            } catch (\PDOException $exception) {
+            } catch ( \PDOException $exception ) {
                 return false;
             }
         }
@@ -104,7 +99,7 @@ class Task extends Model
     }
     public function updateTask( $id, $desc, $is_done ) {
         $pdo = $this->connectDB();
-        if ($pdo) {
+        if ( $pdo ) {
             if( $desc ) {
                 $sql = 'UPDATE tasks SET description = :description, is_done = :is_done WHERE id = :id';
                 $execArray = [
@@ -125,7 +120,7 @@ class Task extends Model
                 $pdoSt->execute( $execArray );
                 return true;
 
-            } catch (\PDOException $exception) {
+            } catch ( \PDOException $exception ) {
                 echo $exception;
                 return false;
             }

@@ -6,7 +6,7 @@ class Model
     public $pdo = null;
     protected function connectDB(): ?\PDO
     {
-        $dbConfig = @parse_ini_file(DB_INI_FILE);
+        $dbConfig = @parse_ini_file( DB_INI_FILE );
         $dsn = sprintf(
             'mysql:dbname=%s;host=%s',
             $dbConfig['DB_NAME'],
@@ -22,7 +22,7 @@ class Model
                     \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ
                 ]
             );
-        } catch (\PDOException $e) {
+        } catch ( \PDOException $e ) {
             return null;
         }
     }

@@ -3,7 +3,7 @@ namespace Models;
 
 class Auth extends Model
 {
-    public function checkUser(string $email, string $password)
+    public function checkUser( string $email, string $password )
     {
         $pdo = $this->connectDB();
         if ($pdo) {
@@ -17,7 +17,7 @@ class Auth extends Model
                     ':password' => $password
                 ]);
                 return $pdoSt->fetch();
-            } catch (\PDOException $exception) {
+            } catch ( \PDOException $exception ) {
                 return null;
             }
         }
